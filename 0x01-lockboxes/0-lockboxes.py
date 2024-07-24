@@ -1,25 +1,29 @@
 #!/usr/bin/python3
 
-def canUnlockAll(boxes):
-    # Total number of boxes
-    n = len(boxes)
-    
-    # Set of unlocked boxes
-    unlocked = set()
-    # Queue for BFS (we can also use a stack for DFS)
-    queue = [0]
-    
-    while queue:
-        # Get the current box index
-        current_box = queue.pop(0)
-        if current_box not in unlocked:
-            # Mark the current box as unlocked
-            unlocked.add(current_box)
-            # Add all boxes we can open with the keys from the current box
-            for key in boxes[current_box]:
-                if key < n and key not in unlocked:
-                    queue.append(key)
-    
-    # Check if we have unlocked all the boxes
-    return len(unlocked) == n
+"""
+Problem: You have n num of locked boxes in front of you.
+         Each box is numbered from 0 to n - 1
+         and each box may contain keys to the other boxes.
+Task: Write a method that determines if all boxes can be opened.
+"""
 
+
+def canUnlockAll(boxes):
+    """
+    Function that checks with boolean value if the list type and
+    length to invoke two for iterations one to traverse the list
+    and the other to compaer if key is idx or not in order to open
+    """
+    if type(boxes) is not list:
+        return False
+    elif (len(boxes)) == 0:
+        return False
+    for k in range(1, len(boxes) - 1):
+        boxes_checked = False
+        for idx in range(len(boxes)):
+            boxes_checked = k in boxes[idx] and k != idx
+            if boxes_checked:
+                break
+        if boxes_checked is False:
+            return boxes_checked
+    return True
